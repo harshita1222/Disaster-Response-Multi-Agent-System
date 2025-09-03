@@ -1,0 +1,40 @@
+name: CI
+
+# Trigger on pushes to main branch and pull requests
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Checkout repo
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # Step 2: Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    # Step 3: Install dependencies
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest
+
+    # Step 4: Run tests (you can add your own later)
+    - name: Run tests
+      run: |
+        pytest || echo "No tests yet"
+
+    # Step 5: Sanity check that Streamlit app runs
+    - name: Streamlit sanity check
+      run: |
+        streamlit --version
