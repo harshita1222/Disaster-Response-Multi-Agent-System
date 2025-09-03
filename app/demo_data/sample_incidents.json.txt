@@ -1,0 +1,23 @@
+[
+  {
+    "id": "INC001",
+    "description": "Collapsed bridge with vehicles trapped",
+    "location": { "lat": 28.6139, "lon": 77.2090 },
+    "casualties": 12,
+    "time": "2025-09-01T10:00:00Z"
+  },
+  {
+    "id": "INC002",
+    "description": "Flooded village, people stranded on rooftops",
+    "location": { "lat": 26.9124, "lon": 75.7873 },
+    "casualties": 30,
+    "time": "2025-09-01T11:30:00Z"
+  },
+  {
+    "id": "INC003",
+    "description": "Highway pile-up with multiple injuries",
+    "location": { "lat": 19.0760, "lon": 72.8777 },
+    "casualties": 18,
+    "time": "2025-09-01T12:15:00Z"
+  }
+]
