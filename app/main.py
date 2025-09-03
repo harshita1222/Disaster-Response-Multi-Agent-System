@@ -1,25 +1,27 @@
 # app/main.py
 from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi.middleware.cors import CORSMiddleware
 from app.agents.triage_agent import score_incident
-from app.agents.optimizer_agent import allocate_resources
 
 app = FastAPI()
 
-class Incident(BaseModel):
-    id: str
-    description: str
-    location: dict
-    casualties: int = 0
+# Allow Streamlit/HF frontend to call backend
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # allow all (narrow down later if needed)
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+@app.get("/")
+def read_root():
+    return {"msg": "Disaster Response System API running"}
 
 @app.post("/triage")
-def triage(inc: Incident):
-    s = score_incident(inc.dict())
-    return {"incident_id": inc.id, "score": s['score'], "reason": s['reason']}
+def triage(incident: dict):
+    return {
+        "incident_id": incident.get("id", "unknown"),
+        **score_incident(incident)
+    }
 
-@app.post("/allocate")
-def allocate(payload: dict):
-    incidents = payload.get("incidents", [])
-    assets = payload.get("assets", [])
-    alloc = allocate_resources(incidents, assets)
-    return {"allocations": alloc}
