@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+langchain
+openai
+streamlit
+requests
+pydantic
+python-dotenv
+folium
+streamlit-folium
+networkx
